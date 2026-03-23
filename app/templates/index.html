@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Student Management{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Student Dashboard</h1>
+    <a href="/add" class="btn btn-primary">Add New Student</a>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="student-list">
+            {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.course }}</td>
+                <td>
+                    <a href="/student/{{ student.id }}" class="btn btn-sm btn-view" style="background: #f0fdf4; color: #166534;">View</a>
+                    <a href="/edit/{{ student.id }}" class="btn btn-sm btn-edit">Edit</a>
+                    <button onclick="deleteStudent({{ student.id }})" class="btn btn-sm btn-delete">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

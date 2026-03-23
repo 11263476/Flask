@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Student Profile - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Student Profile</h1>
+    <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+
+<div class="card">
+    <div style="padding: 2rem;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
+            <div style="color: var(--text-muted); font-weight: 600;">Full Name:</div>
+            <div>{{ student.name }}</div>
+
+            <div style="color: var(--text-muted); font-weight: 600;">Email Address:</div>
+            <div>{{ student.email }}</div>
+
+            <div style="color: var(--text-muted); font-weight: 600;">Age:</div>
+            <div>{{ student.age }}</div>
+
+            <div style="color: var(--text-muted); font-weight: 600;">Enrolled Course:</div>
+            <div>{{ student.course }}</div>
+
+            <div style="color: var(--text-muted); font-weight: 600;">Created At:</div>
+            <div>{{ student.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+        </div>
+        
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+            <a href="/edit/{{ student.id }}" class="btn btn-primary" style="background-color: #2563eb;">Edit Student</a>
+            <button onclick="deleteStudent({{ student.id }})" class="btn btn-delete">Delete Profile</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
