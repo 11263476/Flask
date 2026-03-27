@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
+<!-- Set the page title with the student's name -->
 {% block title %}Student Profile - {{ student.name }}{% endblock %}
 
 {% block content %}
 <div class="header">
     <h1>Student Profile</h1>
+    <!-- Link back to the main list -->
     <a href="/" class="btn btn-secondary">Back to Dashboard</a>
 </div>
 
 <div class="card">
     <div style="padding: 2rem;">
+        <!-- Display student details in a clean two-column grid layout -->
         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
             <div style="color: var(--text-muted); font-weight: 600;">Full Name:</div>
             <div>{{ student.name }}</div>
@@ -24,11 +27,14 @@
             <div>{{ student.course }}</div>
 
             <div style="color: var(--text-muted); font-weight: 600;">Created At:</div>
+            <!-- Format the timestamp for better readability -->
             <div>{{ student.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
         </div>
         
         <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+            <!-- Primary edit action -->
             <a href="/edit/{{ student.id }}" class="btn btn-primary" style="background-color: #2563eb;">Edit Student</a>
+            <!-- Dangerous delete action (triggers JS confirm) -->
             <button onclick="deleteStudent({{ student.id }})" class="btn btn-delete">Delete Profile</button>
         </div>
     </div>

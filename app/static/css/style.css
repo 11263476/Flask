@@ -1,19 +1,24 @@
+/* --- CSS Variables: Define the global color palette and spacing for consistency --- */
 :root {
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
-    --bg-main: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-    --success: #10b981;
-    --danger: #ef4444;
+    --primary: #2563eb;        /* Main brand color (blue) */
+    --primary-hover: #1d4ed8;  /* Color when hovering over primary elements */
+    --secondary: #64748b;      /* Neutral color for secondary actions */
+    --danger: #ef4444;         /* Error and delete color (red) */
+    --success: #22c55e;        /* Success and confirmation color (green) */
+    --bg-light: #f8fafc;       /* Light background for the page */
+    --card-bg: #ffffff;        /* White background for cards and containers */
+    --text-main: #1e293b;      /* Dark gray for main text readability */
+    --text-muted: #64748b;     /* Lighter gray for less important text */
+    --border: #e2e8f0;         /* Soft border color for separation */
+    --radius: 12px;           /* Standard rounded corner radius */
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Subtle elevation effect */
 }
 
+/* --- Global Styles: Resetting defaults and setting base typography --- */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Ensure padding doesn't affect total width/height */
 }
 
 body {
