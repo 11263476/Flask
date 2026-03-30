@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify  # Import Flask utilities
-from app.errors.exceptions import StudentAppError  # Import our base exception class
+from flask import Blueprint, render_template, request, jsonify  # Flask utilities
+from app.errors.exceptions import StudentAppError  # Our base exception class
 
 errors = Blueprint('errors', __name__)  # Create a blueprint for error handling
 
@@ -25,6 +25,11 @@ def error_500(error):
 
 @errors.app_errorhandler(Exception)  # Catch-all handler for any unhandled Python exceptions
 def handle_unexpected_error(error):
+    # Print the error to the server console help debugging
+    print(f"CRITICAL ERROR: {str(error)}")
+    
     if request.path.startswith('/api/'):
         return jsonify({"error": "An unexpected error occurred"}), 500
+    
+    # Render the pretty 500 error page for the user/examiner
     return render_template('errors/500.html'), 500

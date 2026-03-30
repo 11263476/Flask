@@ -6,9 +6,11 @@
     <!-- Dynamic Title: Uses the title block from child templates or defaults to 'Student Management' -->
     <title>{% block title %}Student Management{% endblock %}</title>
     <!-- Link to Google Fonts for modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Link to the custom external CSS stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Theme Switcher Script (Runs early to prevent blinking) -->
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
 </head>
 <body>
     <!-- Navbar: Contains the logo and primary navigation links -->
@@ -16,7 +18,18 @@
         <div class="container nav-content">
             <a href="/" class="logo">Student<span>Portal</span></a>
             <div class="nav-links">
-                <a href="/">Dashboard</a>
+                {% if is_logged_in %}
+                    <a href="/">Dashboard</a>
+                    {% if is_admin %}
+                        <a href="{{ url_for('auth.list_users') }}">Users</a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-sm btn-delete" style="background: var(--danger); margin-left: 1rem;">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}">Login</a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary">Register</a>
+                {% endif %}
+                <!-- Dark Mode Toggle Button -->
+                <button id="theme-toggle" title="Toggle Dark Mode">🌙</button>
             </div>
         </div>
     </nav>

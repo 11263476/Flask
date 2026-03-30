@@ -1,4 +1,5 @@
 from sqlalchemy.future import select  # Import select for building queries
+from sqlalchemy import func  # Import func for aggregations (avg, count, etc.)
 from app.db.models import Student  # Import the Student database model
 from app.db.database import AsyncSessionLocal  # Import our session factory
 
@@ -48,3 +49,39 @@ async def delete_student(student_id):  # Function to delete a student record
             await session.commit()  # Save the deletion to the database
 
         return student  # Return the deleted student (or None)
+
+async def get_student_stats():  # Function to calculate dashboard analytics
+    async with AsyncSessionLocal() as session:
+        # Total Students Count
+        total_result = await session.execute(select(func.count(Student.id)))
+        total_students = total_result.scalar() or 0
+
+        # Average Age
+        avg_age_result = await session.execute(select(func.avg(Student.age)))
+        avg_age = round(avg_age_result.scalar() or 0, 1)
+
+        # Top Course (Most popular)
+        top_course_result = await session.execute(
+            select(Student.course, func.count(Student.id))
+            .group_by(Student.course)
+            .order_by(func.count(Student.id).desc())
+            .limit(1)
+        )
+        top_course_data = top_course_result.first()
+        top_course = top_course_data[0] if top_course_data else "N/A"
+
+        return {
+            "total_students": total_students,
+            "avg_age": avg_age,
+            "top_course": top_course
+        }
+
+async def search_students(query):  # Function to filter students by name or course
+    async with AsyncSessionLocal() as session:
+        # Use ILIKE for case-insensitive search on Name or Course
+        search_filter = select(Student).where(
+            (Student.name.ilike(f"%{query}%")) | 
+            (Student.course.ilike(f"%{query}%"))
+        )
+        result = await session.execute(search_filter)
+        return result.scalars().all()

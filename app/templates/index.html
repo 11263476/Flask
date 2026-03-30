@@ -5,8 +5,40 @@
 {% block content %}
 <div class="header">
     <h1>Student Dashboard</h1>
-    <a href="/add" class="btn btn-primary">Add New Student</a>
+    <div style="display: flex; gap: 1rem;">
+        {% if is_admin %}
+            <!-- Export to CSV button (Admin Only) -->
+            <a href="/export/csv" class="btn btn-secondary" style="background: #f1f5f9; color: #475569;">Export CSV</a>
+            <!-- Link to the 'Add Student' form (Admin Only) -->
+            <a href="/add" class="btn btn-primary">Add New Student</a>
+        {% endif %}
+    </div>
 </div>
+
+<!-- Statistics Section: Modern Grid Cards -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Students</h3>
+        <div class="value">{{ stats.total_students }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Average Age</h3>
+        <div class="value">{{ stats.avg_age }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Top Course</h3>
+        <div class="value">{{ stats.top_course }}</div>
+    </div>
+</div>
+
+<!-- Search & Filter Bar -->
+<form action="/" method="GET" class="search-container">
+    <input type="text" name="q" value="{{ query or '' }}" class="search-input" placeholder="Search by name or course...">
+    <button type="submit" class="btn btn-primary">Search</button>
+    {% if query %}
+        <a href="/" class="btn btn-secondary">Clear</a>
+    {% endif %}
+</form>
 
 <div class="card">
     <table>
@@ -29,9 +61,14 @@
                 <td>{{ student.age }}</td>
                 <td>{{ student.course }}</td>
                 <td>
+                    <!-- Link to view the student's specific profile -->
                     <a href="/student/{{ student.id }}" class="btn btn-sm btn-view" style="background: #f0fdf4; color: #166534;">View</a>
-                    <a href="/edit/{{ student.id }}" class="btn btn-sm btn-edit">Edit</a>
-                    <button onclick="deleteStudent({{ student.id }})" class="btn btn-sm btn-delete">Delete</button>
+                    {% if is_admin %}
+                        <!-- Link to edit the student's details (Admin Only) -->
+                        <a href="/edit/{{ student.id }}" class="btn btn-sm btn-edit">Edit</a>
+                        <!-- Button to trigger the JavaScript delete function (Admin Only) -->
+                        <button onclick="deleteStudent({{ student.id }})" class="btn btn-sm btn-delete">Delete</button>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

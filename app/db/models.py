@@ -11,3 +11,13 @@ class Student(Base):  # Define the Student model which inherits from Base
     age = Column(Integer)  # Column for the student's age
     course = Column(String)  # Column for the enrolled course
     created_at = Column(DateTime, default=datetime.utcnow)  # Timestamp when the record is created
+
+class User(Base):  # Define the User model for authentication and roles
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    password_hash = Column(String(200), nullable=False)  # Stores the hashed password
+    role = Column(String(20), default="user")  # 'admin' or 'user' roles
+    created_at = Column(DateTime, default=datetime.utcnow)

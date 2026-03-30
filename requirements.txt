@@ -3,3 +3,5 @@ sqlalchemy
 aiosqlite
 pydantic
 email-validator
+flask-jwt-extended
+passlib[bcrypt]

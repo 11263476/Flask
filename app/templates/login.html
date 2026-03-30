@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Student Management{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>User Login</h1>
+</div>
+
+<div class="card" style="max-width: 400px; margin: 2rem auto;">
+    <form method="POST" style="padding: 2rem;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() if csrf_token else '' }}">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" required class="form-control" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required class="form-control" placeholder="Enter your password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Login</button>
+        
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted);">
+            Don't have an account? <a href="{{ url_for('auth.register') }}" style="color: var(--primary); font-weight: 500;">Register here</a>
+        </p>
+    </form>
+</div>
+{% endblock %}
