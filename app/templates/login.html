@@ -9,7 +9,7 @@
 
 <div class="card" style="max-width: 400px; margin: 2rem auto;">
     <form method="POST" style="padding: 2rem;">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() if csrf_token else '' }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <label>Username</label>
             <input type="text" name="username" required class="form-control" placeholder="Enter your username">

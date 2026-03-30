@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <!-- Theme Switcher Script (Runs early to prevent blinking) -->
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <!-- CSRF Token Meta for AJAX/JavaScript requests -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <!-- Navbar: Contains the logo and primary navigation links -->

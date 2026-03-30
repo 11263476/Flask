@@ -4,3 +4,4 @@ aiosqlite
 pydantic
 email-validator
 flask-jwt-extended
+flask-wtf

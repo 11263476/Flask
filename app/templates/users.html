@@ -27,10 +27,7 @@
                 <td style="font-weight: 600; color: var(--primary);">{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                    <span class="badge {{ 'badge-admin' if user.role == 'admin' else 'badge-user' }}" 
-                          style="padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;
-                          background: {{ '#dcfce7' if user.role == 'admin' else '#f1f5f9' }}; 
-                          color: {{ '#166534' if user.role == 'admin' else '#475569' }};">
+                    <span class="badge {{ 'badge-admin' if user.role == 'admin' else 'badge-user' }}">
                         {{ user.role.upper() }}
                     </span>
                 </td>
@@ -38,6 +35,7 @@
                 <td>
                     <form action="{{ url_for('auth.delete_user_route', id=user.id) }}" method="POST" 
                           onsubmit="return confirm('Are you sure you want to permanently delete this user?')">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn btn-sm btn-delete" style="background: #fee2e2; color: #991b1b;">Delete</button>
                     </form>
                 </td>

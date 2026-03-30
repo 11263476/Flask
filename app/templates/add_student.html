@@ -11,7 +11,8 @@
 
 <div class="card">
     <!-- Form to collect student data. It sends a POST request to the current URL -->
-    <form method="POST" style="padding: 2rem;">
+    <form method="POST" class="form-card" style="padding: 2rem;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <label>Full Name</label>
             <input type="text" name="name" required class="form-control" placeholder="Enter student's full name">

@@ -66,8 +66,10 @@
                     {% if is_admin %}
                         <!-- Link to edit the student's details (Admin Only) -->
                         <a href="/edit/{{ student.id }}" class="btn btn-sm btn-edit">Edit</a>
-                        <!-- Button to trigger the JavaScript delete function (Admin Only) -->
-                        <button onclick="deleteStudent({{ student.id }})" class="btn btn-sm btn-delete">Delete</button>
+                        <form action="{{ url_for('students.delete_student', id=student.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this student?')">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-delete">Delete</button>
+                        </form>
                     {% endif %}
                 </td>
             </tr>

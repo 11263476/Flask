@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, flash  # Flask core
 from flask_jwt_extended import JWTManager, get_jwt, get_jwt_identity  # JWT support
+from flask_wtf.csrf import CSRFProtect # Industry-standard CSRF protection
 from app.routes.student_routes import student_bp  # Student routes
 from app.routes.auth_routes import auth_bp  # Auth routes
 from app.errors.handlers import errors  # Error handlers
@@ -11,6 +12,7 @@ def create_app():
     
     # --- Initialize Extensions ---
     jwt = JWTManager(app) # Enable JWT
+    csrf = CSRFProtect(app) # Enable Global CSRF Protection for all forms
     
     # --- Global Context Processor ---
     # This function provides 'is_logged_in' and 'is_admin' to EVERY template automatically.
