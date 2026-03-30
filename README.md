@@ -2,16 +2,20 @@
 
 A modern, production-grade Student Management System built with **Flask**, **Asynchronous SQLAlchemy**, and **Pydantic** for robust data validation. This project features a clean, responsive UI with full CRUD capabilities and a modular architecture.
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **Asynchronous Operations**: High-performance database interactions via `aiosqlite` and `asyncio`.
-- **JWT Authentication**: Secure, stateless user sessions using **JSON Web Tokens** and HttpOnly cookies.
-- **Role-Based Access (RBAC)**: Defined `admin` and `user` roles with protected administrative routes.
-- **Premium UI / Dark Mode**: Modern **Indigo Theme** with a persistent **Dark/Light Mode** switcher.
-- **User Management**: Administrative oversight dashboard for managing system users.
-- **Robust Validation**: Server-side data integrity via **Pydantic V2** schemas.
-- **Custom Error Handling**: Professional 404, 500, and 400 error pages.
-- **Modular Architecture**: Clean separation of `routes`, `services`, `models`, and `schemas`.
+- **JWT-Based Authentication**: Stateless security using `Flask-JWT-Extended` with HttpOnly cookies.
+- **CSRF Protection**: Global security using `Flask-WTF` to prevent Cross-Site Request Forgery.
+- **RBAC (Role-Based Access Control)**: Custom `@admin_required` decorators to protect administrative actions.
+- **Asynchronous Data Layer**: High-performance database operations using `SQLAlchemy` and `aiosqlite`.
+- **Modern UI/UX**: Professional Indigo palette, persistent **Dark Mode**, and Glassmorphic navigation.
+
+## 🛡️ Security Implementation
+
+- **Stateless Identity**: Uses JWT tokens instead of traditional sessions, making the backend more scalable.
+- **Unified CSRF Strategy**: One cryptographically-signed token protects every POST request in the app.
+- **Password Hashing**: Uses `Werkzeug`'s industry-standard `pbkdf2:sha256` hashing.
+- **Cookie Hardening**: Configured for `HttpOnly` to prevent XSS-based token theft.
 
 ## 📂 Project Structure
 

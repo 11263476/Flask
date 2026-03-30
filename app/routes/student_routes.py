@@ -123,6 +123,14 @@ def edit_student_view(id):
     return render_template("edit_student.html", student=student)
 
 
+@student_bp.route("/delete/<int:id>", methods=["POST"])
+@admin_required # Only Admins can delete students
+def delete_student_view(id):
+    asyncio.run(delete_student(id))
+    flash("Student record deleted successfully.", "success")
+    return redirect(url_for("students.index"))
+
+
 # --- API Routes (For JSON Data) ---
 
 @student_bp.route("/api/students", methods=["POST"])

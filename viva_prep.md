@@ -24,7 +24,7 @@ This project is much more advanced than a standard Flask app. Use this guide to 
 > "In a professional production system, every User record must be complete and identifiable. We use the email for unique identification and potential password recovery in the future. I enforced this at the database level (`nullable=False`) to ensure Data Integrity across the entire system."
 
 **Q: How do you protect against CSRF attacks in this project?**
-> "I implemented a **Double-Submit Cookie Strategy**. First, the backend generates a unique CSRF token for each user session. This token is required in a hidden field (`csrf_token`) on every POST request. If a request is made without a matching token, the `Flask-WTF` protection will automatically block it with a 400 error."
+> "I implemented a **Unified CSRF Strategy** using `Flask-WTF`. This creates a unique cryptographically-signed token for every form submission. By using a single, robust CSRF provider instead of multiple conflicting ones, I ensured the application stays secure without breaking the user's session."
 
 **Q: What is the benefit of the 'Service Layer' (app/services)?**
 > "I used a Service Layer to separate the **Business Logic** from the **Routes**. The Routes only handle web requests, while the Services handle the actual data work. This makes the code much easier to test and maintain."
