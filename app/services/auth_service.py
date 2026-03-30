@@ -1,4 +1,4 @@
-from passlib.hash import bcrypt  # Import bcrypt for secure password hashing
+from werkzeug.security import generate_password_hash, check_password_hash # Native, modern Flask security library
 from sqlalchemy.future import select  # Import select for queries
 from app.db.models import User  # Import User model
 from app.db.database import AsyncSessionLocal  # Import database session factory
@@ -8,7 +8,7 @@ from app.db.database import AsyncSessionLocal  # Import database session factory
 async def create_user(data):  # Function to register a new user
     async with AsyncSessionLocal() as session:
         # 1. Hash the password before saving (never save plain text!)
-        hashed_pw = bcrypt.hash(data.password)
+        hashed_pw = generate_password_hash(data.password)
         
         # 2. Map the Pydantic data to a SQLAlchemy User model
         new_user = User(
@@ -31,7 +31,7 @@ async def authenticate_user(username, password):  # Function to check login cred
         user = result.scalar_one_or_none()
         
         # 2. Check if user exists and if the password matches the hash
-        if user and bcrypt.verify(password, user.password_hash):
+        if user and check_password_hash(user.password_hash, password):
             return user # Return user if valid
             
         return None # Return None if login fails

@@ -1,6 +1,6 @@
 import asyncio # To run our async functions
 import sys # To read command line arguments
-from passlib.hash import bcrypt # For hashing
+from werkzeug.security import generate_password_hash # For secure hashing
 from app.db.models import User
 from app.db.database import AsyncSessionLocal
 from sqlalchemy.future import select
@@ -11,12 +11,16 @@ async def seed_admin(username, email, password):
     async with AsyncSessionLocal() as session:
         # 1. Check if user already exists
         result = await session.execute(select(User).where(User.username == username))
-        if result.scalar_one_or_none():
-            print(f"Error: User '{username}' already exists!")
-            return
+        existing_user = result.scalar_one_or_none()
+        
+        if existing_user:
+            # Delete the existing user so we can re-create them with the new hash
+            print(f"User '{username}' already exists. Deleting and re-creating with new secure hash...")
+            await session.delete(existing_user)
+            await session.commit()
 
         # 2. Hash and Save
-        hashed_pw = bcrypt.hash(password)
+        hashed_pw = generate_password_hash(password)
         admin_user = User(
             username=username,
             email=email,
@@ -26,6 +30,7 @@ async def seed_admin(username, email, password):
         
         session.add(admin_user)
         await session.commit()
+        print(f"Success! Admin user '{username}' (re)created with new secure hash.")
         print(f"Success! Admin user '{username}' created successfully.")
 
 if __name__ == "__main__":

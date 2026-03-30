@@ -60,12 +60,18 @@ flask/
    python init_db.py
    ```
 
-5. **Run the application**:
+5. **Create your Admin account**:
+   ```bash
+   python seed_admin.py YourUsername YourEmail YourPassword
+   # Example: python seed_admin.py admin admin@example.com admin123
+   ```
+
+6. **Run the application**:
    ```bash
    python run.py
    ```
 
-6. **Access the app**:
+7. **Access the app**:
    Open your browser and navigate to `http://127.0.0.1:5000`.
 
 ## 🛡️ License
