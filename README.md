@@ -4,12 +4,14 @@ A modern, production-grade Student Management System built with **Flask**, **Asy
 
 ## 🚀 Features
 
-- **Asynchronous Operations**: Uses `aiosqlite` and `asyncio` for non-blocking database interactions.
-- **Robust Validation**: Data integrity is ensured through **Pydantic V2** schemas.
-- **Custom Error Handling**: Dedicated handlers for 404, 500, and 400 errors with user-friendly pages.
-- **Modular Architecture**: Organized into `routes`, `services`, `models`, and `schemas` for scalability.
-- **Interactive UI**: Stylish dashboard with real-time feedback using **Flash messaging** and **Confirm-on-Delete** JavaScript.
-- **RESTful API**: Supports both traditional form-based interactions and a JSON API.
+- **Asynchronous Operations**: High-performance database interactions via `aiosqlite` and `asyncio`.
+- **JWT Authentication**: Secure, stateless user sessions using **JSON Web Tokens** and HttpOnly cookies.
+- **Role-Based Access (RBAC)**: Defined `admin` and `user` roles with protected administrative routes.
+- **Premium UI / Dark Mode**: Modern **Indigo Theme** with a persistent **Dark/Light Mode** switcher.
+- **User Management**: Administrative oversight dashboard for managing system users.
+- **Robust Validation**: Server-side data integrity via **Pydantic V2** schemas.
+- **Custom Error Handling**: Professional 404, 500, and 400 error pages.
+- **Modular Architecture**: Clean separation of `routes`, `services`, `models`, and `schemas`.
 
 ## 📂 Project Structure
 
