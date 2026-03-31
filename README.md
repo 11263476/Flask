@@ -6,7 +6,7 @@ A modern, production-grade Student Management System built with **Flask**, **Asy
 
 - **JWT-Based Authentication**: Stateless security using `Flask-JWT-Extended` with HttpOnly cookies.
 - **CSRF Protection**: Global security using `Flask-WTF` to prevent Cross-Site Request Forgery.
-- **RBAC (Role-Based Access Control)**: Custom `@admin_required` decorators to protect administrative actions.
+- **RBAC (Role-Based Access Control)**: Custom `@admin_required` decorators strictly protect all modification routes (Add, Edit, Delete).
 - **Asynchronous Data Layer**: High-performance database operations using `SQLAlchemy` and `aiosqlite`.
 - **Modern UI/UX**: Professional Indigo palette, persistent **Dark Mode**, and Glassmorphic navigation.
 

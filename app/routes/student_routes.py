@@ -80,7 +80,7 @@ def view_student(id):
 
 
 @student_bp.route("/add", methods=["GET", "POST"])
-@jwt_required() # Only logged-in users can access the add form
+@admin_required # Strictly for Admins
 def add_student_view():
     if request.method == "POST":
         try:
@@ -100,7 +100,7 @@ def add_student_view():
 
 
 @student_bp.route("/edit/<int:id>", methods=["GET", "POST"])
-@jwt_required() # Only logged-in users can edit records
+@admin_required # Strictly for Admins
 def edit_student_view(id):
     student = asyncio.run(get_student(id))
     if not student:
@@ -134,7 +134,7 @@ def delete_student_view(id):
 # --- API Routes (For JSON Data) ---
 
 @student_bp.route("/api/students", methods=["POST"])
-@jwt_required()
+@admin_required # Strictly only Admins
 def add_student_api():
     data = StudentCreate(**request.json)
     student = asyncio.run(create_student(data))
@@ -149,7 +149,7 @@ def get_all_students_api():
 
 
 @student_bp.route("/api/students/<int:id>", methods=["PUT"])
-@jwt_required()
+@admin_required # Strictly only Admins
 def update_api(id):
     data = StudentCreate(**request.json)
     student = asyncio.run(update_student(id, data))
