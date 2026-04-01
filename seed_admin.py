@@ -14,24 +14,24 @@ async def seed_admin(username, email, password):
         existing_user = result.scalar_one_or_none()
         
         if existing_user:
-            # Delete the existing user so we can re-create them with the new hash
-            print(f"User '{username}' already exists. Deleting and re-creating with new secure hash...")
-            await session.delete(existing_user)
+            # 2. Update existing user's password
+            print(f"User '{username}' already exists. Updating to new secure hash...")
+            existing_user.password_hash = generate_password_hash(password)
+            existing_user.email = email
             await session.commit()
-
-        # 2. Hash and Save
-        hashed_pw = generate_password_hash(password)
-        admin_user = User(
-            username=username,
-            email=email,
-            password_hash=hashed_pw,
-            role="admin" # Here we manually set the 'admin' role!
-        )
-        
-        session.add(admin_user)
-        await session.commit()
-        print(f"Success! Admin user '{username}' (re)created with new secure hash.")
-        print(f"Success! Admin user '{username}' created successfully.")
+            print(f"Success! Admin user '{username}' has been updated.")
+        else:
+            # 3. Create NEW user if they don't exist
+            hashed_pw = generate_password_hash(password)
+            admin_user = User(
+                username=username,
+                email=email,
+                password_hash=hashed_pw,
+                role="admin"
+            )
+            session.add(admin_user)
+            await session.commit()
+            print(f"Success! Admin user '{username}' created successfully.")
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:

@@ -64,10 +64,13 @@ flask/
    python init_db.py
    ```
 
-5. **Create your Admin account**:
-   ```bash
-   python seed_admin.py YourUsername YourEmail YourPassword
-   # Example: python seed_admin.py admin admin@example.com admin123
+5. **Bootstrap/Reset Admin Account**:
+Run the private seeding script to create your first admin or **reset a forgotten password**:
+```powershell
+python seed_admin.py <username> <email> <password>
+```
+*Note: If the username already exists, the script will securely update the password hash in-place.*
+# Example: python seed_admin.py admin admin@example.com admin123
    ```
 
 6. **Run the application**:
