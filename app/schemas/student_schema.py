@@ -1,14 +1,14 @@
-from pydantic import BaseModel  # Import the base class for Pydantic models
+from pydantic import BaseModel
 
-class StudentCreate(BaseModel):  # Define a schema for creating or updating a student
-    name: str  # Student's name must be a string
-    email: str  # Student's email must be a string
-    age: int  # Student's age must be an integer
-    course: str  # Student's course must be a string
+class StudentCreate(BaseModel):
+    name: str
+    email: str
+    age: int
+    course: str
 
 
-class StudentResponse(StudentCreate):  # Define a schema for sending student data back to the user
-    id: int  # Include the unique database ID in the response
+class StudentResponse(StudentCreate):
+    id: int
 
-    class Config:  # Internal configuration for Pydantic
-        from_attributes = True  # Allows Pydantic to read data from SQLAlchemy objects
+    class Config:
+        from_attributes = True

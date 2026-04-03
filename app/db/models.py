@@ -1,23 +1,23 @@
-from sqlalchemy import Column, Integer, String, DateTime  # Import SQL column types
-from datetime import datetime  # Import datetime for timestamps
-from .database import Base  # Import the Base class from our database config
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+from .database import Base
 
-class Student(Base):  # Define the Student model which inherits from Base
-    __tablename__ = "students"  # Specify the name of the database table
+class Student(Base):
+    __tablename__ = "students"
 
-    id = Column(Integer, primary_key=True, index=True)  # Primary key with an index
-    name = Column(String)  # Column for the student's name
-    email = Column(String, unique=True)  # Column for unique email addresses
-    age = Column(Integer)  # Column for the student's age
-    course = Column(String)  # Column for the enrolled course
-    created_at = Column(DateTime, default=datetime.utcnow)  # Timestamp when the record is created
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    age = Column(Integer)
+    course = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
-class User(Base):  # Define the User model for authentication and roles
+class User(Base):
     __tablename__ = "users"
     
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False)
     email = Column(String(100), unique=True, nullable=False)
-    password_hash = Column(String(200), nullable=False)  # Stores the hashed password
-    role = Column(String(20), default="user")  # 'admin' or 'user' roles
+    password_hash = Column(String(200), nullable=False)
+    role = Column(String(20), default="user")
     created_at = Column(DateTime, default=datetime.utcnow)

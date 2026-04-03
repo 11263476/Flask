@@ -1,27 +1,22 @@
-import asyncio # To run our async functions
-import sys # To read command line arguments
-from werkzeug.security import generate_password_hash # For secure hashing
+import asyncio
+import sys
+from werkzeug.security import generate_password_hash
 from app.db.models import User
 from app.db.database import AsyncSessionLocal
 from sqlalchemy.future import select
 
-# --- Seed Admin Script: A private tool to create your first Admin user ---
-
 async def seed_admin(username, email, password):
     async with AsyncSessionLocal() as session:
-        # 1. Check if user already exists
         result = await session.execute(select(User).where(User.username == username))
         existing_user = result.scalar_one_or_none()
         
         if existing_user:
-            # 2. Update existing user's password
             print(f"User '{username}' already exists. Updating to new secure hash...")
             existing_user.password_hash = generate_password_hash(password)
             existing_user.email = email
             await session.commit()
             print(f"Success! Admin user '{username}' has been updated.")
         else:
-            # 3. Create NEW user if they don't exist
             hashed_pw = generate_password_hash(password)
             admin_user = User(
                 username=username,

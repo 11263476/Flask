@@ -1,39 +1,35 @@
-/* --- Modern Color Palette & Variables --- */
 :root {
-    /* --- Light Mode (Default) --- */
-    --primary: #6366f1;        /* Stylish Indigo brand color */
-    --primary-hover: #4f46e5;  /* Deep Indigo hover state */
-    --secondary: #64748b;      /* Slate secondary color */
-    --danger: #ef4444;         /* Vibrant red for deletes */
-    --success: #10b981;        /* Modern emerald for success */
-    --bg-page: #f8fafc;       /* Light, clean page background */
-    --card-bg: #ffffff;        /* Pure white for card surfaces */
-    --nav-bg: rgba(255, 255, 255, 0.82); /* Frosted glass nav background */
-    --text-main: #1e293b;      /* Navy/Slate for text readability */
-    --text-muted: #64748b;     /* Slate for secondary text */
-    --border: #e2e8f0;         /* Soft border color */
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --secondary: #64748b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --bg-page: #f8fafc;
+    --card-bg: #ffffff;
+    --nav-bg: rgba(255, 255, 255, 0.82);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
     
-    --radius: 12px;           /* Standard rounded corner radius */
+    --radius: 12px;
     --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother animation curve */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- Dark Mode Overrides (Triggered by data-theme="dark") --- */
 [data-theme="dark"] {
-    --bg-page: #0f172a;       /* Deep slate/navy background */
-    --card-bg: #1e293b;        /* Lighter slate for cards */
-    --nav-bg: rgba(15, 23, 42, 0.85); /* Dark frosted glass */
-    --text-main: #f1f5f9;      /* Whitesmoke for readability on dark */
-    --text-muted: #94a3b8;     /* Lighter slate for muted text */
-    --border: #334155;         /* Darker border for separation */
+    --bg-page: #0f172a;
+    --card-bg: #1e293b;
+    --nav-bg: rgba(15, 23, 42, 0.85);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #334155;
 }
 
-/* --- Global Reset & Typography --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: background-color 0.3s ease, border-color 0.3s ease; /* Ensure smooth theme switching */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
@@ -49,7 +45,6 @@ body {
     padding: 0 1.5rem;
 }
 
-/* --- Navigation: Modern Glassmorphism Effect --- */
 nav {
     background-color: var(--nav-bg);
     backdrop-filter: blur(8px);
@@ -98,7 +93,6 @@ nav {
     color: var(--primary);
 }
 
-/* --- Theme Toggle Button --- */
 #theme-toggle {
     background: none;
     border: 1px solid var(--border);
@@ -115,7 +109,6 @@ nav {
     background: var(--bg-page);
 }
 
-/* --- Main Layout --- */
 .main-content {
     padding: 2.5rem 0;
     min-height: calc(100vh - 160px);
@@ -128,7 +121,6 @@ nav {
     margin-bottom: 2.5rem;
 }
 
-/* --- Cards: Elevated design with 3D hover --- */
 .card {
     background: var(--card-bg);
     border-radius: var(--radius);
@@ -138,7 +130,6 @@ nav {
     transition: var(--transition);
 }
 
-/* --- Dashboard Stats --- */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -157,7 +148,7 @@ nav {
 }
 
 .stat-card:hover {
-    transform: translateY(-8px); /* 3D elevation effect */
+    transform: translateY(-8px);
     border-color: var(--primary);
 }
 
@@ -175,7 +166,6 @@ nav {
     color: var(--primary);
 }
 
-/* --- Search & Filter Bar: Wide Layout --- */
 .search-container {
     display: flex;
     gap: 1rem;
@@ -188,7 +178,7 @@ nav {
 }
 
 .search-input {
-    flex: 1; /* This makes the search bar take up all available space */
+    flex: 1;
     padding: 0.75rem 1rem;
     border: 2px solid var(--border);
     border-radius: 8px;
@@ -204,7 +194,6 @@ nav {
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-/* --- Forms & Inputs --- */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -234,7 +223,6 @@ label {
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-/* --- Buttons: Modern Shadow and Hover --- */
 .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
@@ -272,7 +260,6 @@ label {
     font-size: 0.875rem;
 }
 
-/* --- Table Styling --- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -303,7 +290,6 @@ tr:hover {
     background-color: rgba(99, 102, 241, 0.03);
 }
 
-/* --- Flash Messages --- */
 .alert {
     padding: 1rem 1.5rem;
     border-radius: 8px;
@@ -321,7 +307,6 @@ tr:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Mobile Responsiveness --- */
 @media (max-width: 640px) {
     .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .nav-content { flex-direction: column; gap: 1rem; }
@@ -329,7 +314,6 @@ tr:hover {
     table { display: block; overflow-x: auto; }
 }
 
-/* --- Badge System --- */
 .badge {
     padding: 0.25rem 0.75rem;
     border-radius: 999px;

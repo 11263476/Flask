@@ -1,12 +1,12 @@
-from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, Response  # Flask utilities
-import asyncio  # Asynchronous support
-import csv, io # Data export utilities
-from functools import wraps # For custom decorators
-from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity # JWT security
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, Response
+import asyncio
+import csv, io
+from functools import wraps
+from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
 
-from app.errors.exceptions import ResourceNotFoundError, ValidationError # Our custom errors
-from app.schemas.student_schema import StudentCreate # The data validation schema
-from app.services.student_service import ( # Our database logic functions
+from app.errors.exceptions import ResourceNotFoundError, ValidationError
+from app.schemas.student_schema import StudentCreate
+from app.services.student_service import (
     create_student,
     get_students,
     get_student,
@@ -16,24 +16,21 @@ from app.services.student_service import ( # Our database logic functions
     search_students
 )
 
-# --- Security Decorator: Only allows users with role='admin' to proceed ---
 def admin_required(f):
     @wraps(f)
-    @jwt_required() # First, confirm they are logged in
+    @jwt_required()
     def decorated_function(*args, **kwargs):
-        claims = get_jwt() # Get the token's extra information (like role)
+        claims = get_jwt()
         if claims.get("role") != "admin":
             flash("Error: You do not have permission to perform this action.", "danger")
-            return redirect(url_for("students.index")) # Send them back to dashboard
+            return redirect(url_for("students.index"))
         return f(*args, **kwargs)
     return decorated_function
 
-student_bp = Blueprint("students", __name__) # Our student routes blueprint
-
-# --- UI Routes (For Browser) ---
+student_bp = Blueprint("students", __name__)
 
 @student_bp.route("/")
-@jwt_required() # REQUIRED login. If not logged in, user will be redirected to Login page.
+@jwt_required()
 def index():
     query = request.args.get("q")
     
@@ -44,14 +41,10 @@ def index():
         
     stats = asyncio.run(get_student_stats())
     
-    # We no longer need to check is_admin here manually! 
-    # Our new context_processor in main.py handles it for the whole app.
-    
     return render_template("index.html", students=students, stats=stats, query=query)
 
-
 @student_bp.route("/export/csv")
-@jwt_required() # Only logged-in users can export data
+@jwt_required()
 def export_csv():
     students = asyncio.run(get_students())
     output = io.StringIO()
@@ -66,9 +59,8 @@ def export_csv():
         headers={"Content-disposition": "attachment; filename=students_export.csv"}
     )
 
-
 @student_bp.route("/student/<int:id>")
-@jwt_required() # Require login to view specific profiles
+@jwt_required()
 def view_student(id):
     student = asyncio.run(get_student(id))
     if not student:
@@ -78,9 +70,8 @@ def view_student(id):
     is_admin = token.get("role") == "admin"
     return render_template("view_student.html", student=student, is_admin=is_admin)
 
-
 @student_bp.route("/add", methods=["GET", "POST"])
-@admin_required # Strictly for Admins
+@admin_required
 def add_student_view():
     if request.method == "POST":
         try:
@@ -98,9 +89,8 @@ def add_student_view():
     
     return render_template("add_student.html")
 
-
 @student_bp.route("/edit/<int:id>", methods=["GET", "POST"])
-@admin_required # Strictly for Admins
+@admin_required
 def edit_student_view(id):
     student = asyncio.run(get_student(id))
     if not student:
@@ -122,24 +112,19 @@ def edit_student_view(id):
 
     return render_template("edit_student.html", student=student)
 
-
 @student_bp.route("/delete/<int:id>", methods=["POST"])
-@admin_required # Only Admins can delete students
+@admin_required
 def delete_student_view(id):
     asyncio.run(delete_student(id))
     flash("Student record deleted successfully.", "success")
     return redirect(url_for("students.index"))
 
-
-# --- API Routes (For JSON Data) ---
-
 @student_bp.route("/api/students", methods=["POST"])
-@admin_required # Strictly only Admins
+@admin_required
 def add_student_api():
     data = StudentCreate(**request.json)
     student = asyncio.run(create_student(data))
     return jsonify({"message": "Student created", "data": student.id})
-
 
 @student_bp.route("/api/students", methods=["GET"])
 @jwt_required()
@@ -147,9 +132,8 @@ def get_all_students_api():
     students = asyncio.run(get_students())
     return jsonify([s.__dict__ for s in students if not s.__dict__.pop('_sa_instance_state', None)])
 
-
 @student_bp.route("/api/students/<int:id>", methods=["PUT"])
-@admin_required # Strictly only Admins
+@admin_required
 def update_api(id):
     data = StudentCreate(**request.json)
     student = asyncio.run(update_student(id, data))
@@ -157,9 +141,8 @@ def update_api(id):
         raise ResourceNotFoundError("Student not found")
     return jsonify({"message": "Updated"})
 
-
 @student_bp.route("/api/students/<int:id>", methods=["DELETE"])
-@admin_required # Strictly only Admins can delete
+@admin_required
 def delete_api(id):
     student = asyncio.run(delete_student(id))
     if not student:

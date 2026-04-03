@@ -3,19 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Dynamic Title: Uses the title block from child templates or defaults to 'Student Management' -->
     <title>{% block title %}Student Management{% endblock %}</title>
-    <!-- Link to Google Fonts for modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Link to the custom external CSS stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Theme Switcher Script (Runs early to prevent blinking) -->
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
-    <!-- CSRF Token Meta for AJAX/JavaScript requests -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <!-- Navbar: Contains the logo and primary navigation links -->
     <nav class="navbar">
         <div class="container nav-content">
             <a href="/" class="logo">Student<span>Portal</span></a>
@@ -30,14 +24,12 @@
                     <a href="{{ url_for('auth.login') }}">Login</a>
                     <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary">Register</a>
                 {% endif %}
-                <!-- Dark Mode Toggle Button -->
                 <button id="theme-toggle" title="Toggle Dark Mode">🌙</button>
             </div>
         </div>
     </nav>
 
     <div class="container content">
-        <!-- Flash Messages: Displays success/error alerts sent from the Flask backend -->
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
@@ -46,11 +38,9 @@
           {% endif %}
         {% endwith %}
 
-        <!-- Main Content Block: Where child templates (index, add, etc.) will inject their specific HTML -->
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Link to the external JavaScript file for interactive features like deletion -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

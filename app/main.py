@@ -1,22 +1,18 @@
-from flask import Flask, redirect, url_for, flash  # Flask core
-from flask_jwt_extended import JWTManager, get_jwt, get_jwt_identity  # JWT support
-from flask_wtf.csrf import CSRFProtect # Industry-standard CSRF protection
-from app.routes.student_routes import student_bp  # Student routes
-from app.routes.auth_routes import auth_bp  # Auth routes
-from app.errors.handlers import errors  # Error handlers
-from app.config import Config  # Config settings
+from flask import Flask, redirect, url_for, flash
+from flask_jwt_extended import JWTManager, get_jwt, get_jwt_identity
+from flask_wtf.csrf import CSRFProtect
+from app.routes.student_routes import student_bp
+from app.routes.auth_routes import auth_bp
+from app.errors.handlers import errors
+from app.config import Config
 
 def create_app():
     app = Flask(__name__)  # Initialize app
-    app.config.from_object(Config)  # Load settings
+    app.config.from_object(Config)
     
-    # --- Initialize Extensions ---
-    jwt = JWTManager(app) # Enable JWT
-    csrf = CSRFProtect(app) # Enable Global CSRF Protection for all forms
+    jwt = JWTManager(app)
+    csrf = CSRFProtect(app)
     
-    # --- Global Context Processor ---
-    # This function provides 'is_logged_in' and 'is_admin' to EVERY template automatically.
-    # This prevents those pesky 500 errors if a variable is missing in index.html or base.html.
     @app.context_processor
     def inject_auth_status():
         try:
@@ -28,7 +24,6 @@ def create_app():
         except:
             return {"is_logged_in": False, "is_admin": False}
 
-    # --- JWT Redirect Handlers ---
     @jwt.unauthorized_loader
     def custom_unauthorized_response(_err):
         return redirect(url_for('auth.login'))
@@ -46,7 +41,6 @@ def create_app():
         flash("Invalid session. Please login again.", "danger")
         return response
     
-    # --- Register Blueprints ---
     app.register_blueprint(student_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(errors)
